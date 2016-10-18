@@ -13,13 +13,13 @@ Installation
 
  where:
 
- * `dita-ot-dir` is the DITA-OT installation directory.
+ * `plug-in-zip` is the filename or URL of the plug-in's distribution ZIP file (optional).
 
 2. Using Ant:
 
  1) The unzip the plug-in file to plugins subdirectory.
 
- 2) ./bin/ant -f integrator.xml
+ 2) `./bin/ant -f integrator.xml`
 
 
 Running the transformation
