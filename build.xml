@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project name="org.shelden.merged.html">
+
+	<target name="dita2merged-html" depends="dita2merged-html.init, merge, xhtml.init, xhtml.image-metadata, dita.topics.merged.html.common, copy-css, dita2merged-html.copy-css-images"/>
+
+	<target name="dita2merged-html.init" depends="clean-temp">
+		<!--<property name="generate.copy.outer" value="3"/>-->
+		<property name="args.copycss" value="yes"/>
+		<condition property="args.css" value="${dita.plugin.org.shelden.merged.html.dir}/styles/common.css">
+			<not>
+				<isset property="args.css"/>
+			</not>
+		</condition>
+	</target>
+
+	<target name="premerge" depends="dita2xhtml.init, build-init, preprocess"/>
+
+	<target name="merge" description="Merge topics" depends="premerge">
+		<dirname property="dita.temp.dir.fullpath" file="${dita.temp.dir}${file.separator}dummy.file"/>
+		<pipeline message="topicmerge" taskname="topic-merge" inputmap="${dita.temp.dir.fullpath}${file.separator}${user.input.file}"
+			tempdir="${dita.temp.dir.fullpath}">
+			<module class="org.dita.dost.module.TopicMergeModule">
+				<param name="output" location="${dita.temp.dir.fullpath}${file.separator}${dita.map.filename.root}_MERGED.xml"/>
+				<param name="style" location="${dita.plugin.org.shelden.merged.html.dir}/xsl/common/topicmerge.xsl"/>
+			</module>
+		</pipeline>
+	</target>
+
+	<target name="dita.topics.merged.html.common" unless="noTopic">
+		<xslt in="${dita.temp.dir}${file.separator}${dita.map.filename.root}_MERGED.xml"
+			out="${output.dir}${file.separator}${dita.map.filename.root}${out.ext}" reloadstylesheet="${dita.xhtml.reloadstylesheet}"
+			classpathref="dost.class.path" extension="${out.ext}" style="${args.xsl}" filenameparameter="FILENAME" filedirparameter="FILEDIR">
+			<excludesfile name="${dita.temp.dir}${file.separator}${resourceonlyfile}" if="resourceonlyfile"/>
+			<param name="TRANSTYPE" expression="${transtype}"/>
+			<param name="FILTERFILE" expression="${dita.input.valfile.url}" if="dita.input.valfile"/>
+			<param name="CSS" expression="${args.css.file}" if="args.css.file"/>
+			<param name="CSSPATH" expression="${user.csspath}" if="user.csspath"/>
+			<param name="HDF" expression="${args.hdf}" if="args.hdf"/>
+			<param name="HDR" expression="${args.hdr}" if="args.hdr"/>
+			<param name="FTR" expression="${args.ftr}" if="args.ftr"/>
+			<param name="DRAFT" expression="${args.draft}" if="args.draft"/>
+			<param name="ARTLBL" expression="${args.artlbl}" if="args.artlbl"/>
+			<param name="GENERATE-TASK-LABELS" expression="${args.gen.task.lbl}" if="args.gen.task.lbl"/>
+			<param name="PRESERVE-DITA-CLASS" expression="${args.xhtml.classattr}" if="args.xhtml.classattr"/>
+			<param name="NOPARENTLINK" expression="${args.hide.parent.link}" if="args.hide.parent.link"/>
+			<param name="include.rellinks" expression="${include.rellinks}"/>
+			<param name="BREADCRUMBS" expression="${args.breadcrumbs}" if="args.breadcrumbs"/>
+			<param name="INDEXSHOW" expression="${args.indexshow}" if="args.indexshow"/>
+			<param name="genDefMeta" expression="${args.gen.default.meta}" if="args.gen.default.meta"/>
+			<param name="OUTEXT" expression="${out.ext}" if="out.ext"/>
+			<param name="BASEDIR" expression="${basedir}"/>
+			<param name="OUTPUTDIR" expression="${output.dir}"/>
+			<param name="DBG" expression="${args.debug}" if="args.debug"/>
+			<xmlcatalog refid="dita.catalog"/>
+		</xslt>
+	</target>
+	
+	<target name="dita2merged-html.copy-css-images">
+		<copy todir="${output.dir}/images" failonerror="false">
+			<fileset dir="${dita.plugin.org.shelden.merged.html.dir}/styles/images" includes="*.*"/>
+		</copy>
+	</target>
+</project>
