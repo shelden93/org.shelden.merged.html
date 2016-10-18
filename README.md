@@ -7,13 +7,13 @@ Preview
 Installation
 ------------
 
-    Using Dita:
+1. Using Dita:
     ./bin/dita -install plug-in-zip
 
     where:
 		* dita-ot-dir is the DITA-OT installation directory.
 
-    Using Ant:
+2. Using Ant:
 
 	* The unzip the plug-in file to plugins subdirectory.
 
@@ -23,7 +23,7 @@ Installation
 Running the transformation
 --------------------------
 
-    Using Dita:
+1. Using Dita:
     ./bin/dita -i ./docsrc/samples/hierarchy.ditamap -f merged-html -o out
 
 License
