@@ -11,15 +11,15 @@ Installation
 
 		./bin/dita -install plug-in-zip
 
-	where:
+where:
 
-		* dita-ot-dir is the DITA-OT installation directory.
+* dita-ot-dir is the DITA-OT installation directory.
 
 2. Using Ant:
 
-	* The unzip the plug-in file to plugins subdirectory.
+		1) The unzip the plug-in file to plugins subdirectory.
 
-	* ./bin/ant -f integrator.xml
+		2) ./bin/ant -f integrator.xml
 
 
 Running the transformation
