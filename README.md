@@ -8,10 +8,12 @@ Installation
 ------------
 
 1. Using Dita:
-    ./bin/dita -install plug-in-zip
 
-where:
-	* dita-ot-dir is the DITA-OT installation directory.
+		./bin/dita -install plug-in-zip
+
+	where:
+
+		* dita-ot-dir is the DITA-OT installation directory.
 
 2. Using Ant:
 
