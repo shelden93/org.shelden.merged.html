@@ -65,7 +65,7 @@
 	</target>
 
 	<target name="dita2merged-html.copy-css-images" unless="copyDefaultStyleImages">
-		<copy todir="${output.dir}/Images" failonerror="false">
+		<copy todir="${output.dir}/images" failonerror="false">
 			<fileset dir="${dita.plugin.org.shelden.merged.html.dir}/styles/images" includes="*.*"/>
 		</copy>
 	</target>
