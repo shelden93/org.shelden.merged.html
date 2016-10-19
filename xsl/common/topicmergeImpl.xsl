@@ -5,7 +5,9 @@
 
 	<xsl:import href="plugin:org.dita.pdf2:xsl/common/topicmerge.xsl"/>
 
-	<xsl:template match="dita-merge/*[contains(@class, ' map/map ')]" mode="build-tree">
-		<xsl:apply-templates mode="build-tree"/>
-	</xsl:template>
+	<xsl:template match="*[contains(@class, ' bookmap/toc ')][not(@href)]" priority="2" mode="build-tree"/>
+	<xsl:template match="*[contains(@class, ' bookmap/indexlist ')][not(@href)]" priority="2" mode="build-tree"/>
+	<xsl:template match="*[contains(@class, ' bookmap/tablelist ')][not(@href)]" priority="2" mode="build-tree"/>
+	<xsl:template match="*[contains(@class, ' bookmap/figurelist ')][not(@href)]" priority="2" mode="build-tree"/>
+	<xsl:template match="*[contains(@class, ' bookmap/glossarylist ')][not(@href)]" priority="2" mode="build-tree"/>
 </xsl:stylesheet>

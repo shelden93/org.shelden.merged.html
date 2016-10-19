@@ -5,5 +5,5 @@
 
 	<feature extension="dita.conductor.transtype.check" value="merged-html"/>
 	<feature extension="dita.conductor.target.relative" file="conductor.xml"/>
-	<feature extension="dita.xsl.xhtml" file="xsl/custom.xsl" />
+	<feature extension="dita.xsl.xhtml" file="xsl/merged-html.xsl" />
 </plugin>

@@ -5,10 +5,19 @@
 
 	<target name="dita2merged-html.init" depends="clean-temp">
 		<!--<property name="generate.copy.outer" value="3"/>-->
-		<property name="args.copycss" value="yes"/>
+		<condition property="args.copycss" value="yes">
+			<not>
+				<isset property="args.copycss"/>
+			</not>
+		</condition>
 		<condition property="args.css" value="${dita.plugin.org.shelden.merged.html.dir}/styles/common.css">
 			<not>
 				<isset property="args.css"/>
+			</not>
+		</condition>
+		<condition property="copyDefaultStyleImages" value="no">
+			<not>
+				<equals arg1="${args.css}" arg2="${dita.plugin.org.shelden.merged.html.dir}/styles/common.css"/>
 			</not>
 		</condition>
 	</target>
@@ -26,7 +35,7 @@
 		</pipeline>
 	</target>
 
-	<target name="dita.topics.merged.html.common" unless="noTopic">
+	<target name="dita.topics.merged.html.common" unless="noMap">
 		<xslt in="${dita.temp.dir}${file.separator}${dita.map.filename.root}_MERGED.xml"
 			out="${output.dir}${file.separator}${dita.map.filename.root}${out.ext}" reloadstylesheet="${dita.xhtml.reloadstylesheet}"
 			classpathref="dost.class.path" extension="${out.ext}" style="${args.xsl}" filenameparameter="FILENAME" filedirparameter="FILEDIR">
@@ -54,9 +63,9 @@
 			<xmlcatalog refid="dita.catalog"/>
 		</xslt>
 	</target>
-	
-	<target name="dita2merged-html.copy-css-images">
-		<copy todir="${output.dir}/images" failonerror="false">
+
+	<target name="dita2merged-html.copy-css-images" unless="copyDefaultStyleImages">
+		<copy todir="${output.dir}/Images" failonerror="false">
 			<fileset dir="${dita.plugin.org.shelden.merged.html.dir}/styles/images" includes="*.*"/>
 		</copy>
 	</target>
